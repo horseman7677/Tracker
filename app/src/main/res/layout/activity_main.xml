@@ -67,12 +67,14 @@
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:paddingTop="10dp"
+                app:passwordToggleEnabled="true"
                 app:boxCornerRadiusBottomEnd="12dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
