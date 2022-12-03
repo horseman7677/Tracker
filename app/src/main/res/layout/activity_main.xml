@@ -51,8 +51,10 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username"
-                app:boxCornerRadiusBottomStart="12dp">
+                android:hint="E-mail"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -68,7 +70,9 @@
                 android:hint="Password"
                 android:paddingTop="10dp"
                 app:passwordToggleEnabled="true"
-                app:boxCornerRadiusBottomEnd="12dp">
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -88,14 +92,12 @@
         android:layout_marginBottom="173dp"
         android:text="sign in"
         android:textAllCaps="false"
-        android:textSize="20sp"
-        android:paddingRight="8dp"
+        android:textSize="23dp"
         android:textColor="@color/smokyWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/login_btn_grad"
-        android:drawableRight="@drawable/email_logo"
 
         />
 
@@ -103,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="112dp"
-        android:text="Dont't have account?"
+        android:text="Don't have account?"
         android:textSize="18sp"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"

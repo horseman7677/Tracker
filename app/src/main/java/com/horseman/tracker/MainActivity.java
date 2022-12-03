@@ -1,12 +1,16 @@
 package com.horseman.tracker;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -30,17 +34,23 @@ public class MainActivity extends AppCompatActivity {
     TextInputLayout username, password;
     FirebaseAuth auth;
     DatabaseReference reference;
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActionBar bar = getSupportActionBar();
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#2C132C"));
+        bar.setBackgroundDrawable(colorDrawable);
+
         auth = FirebaseAuth.getInstance();
 
         if(auth.getCurrentUser()!=null)
         {
             Intent intent =new Intent(MainActivity.this,UserDashboard.class);
+            System.out.println("check ------------------------------------------------------: "+auth.getCurrentUser().getUid().trim());
             intent.putExtra("uid",auth.getCurrentUser().getUid());
             startActivity(intent);
             finish();
@@ -50,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         password = findViewById(R.id.passwordLogin);
         signBtn = findViewById(R.id.signInBtnLogin);
         signupTxt = findViewById(R.id.signupTxtLogin);
-
+        pd = new ProgressDialog(this);
 
 
         signupTxt.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
         signBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pd.setCancelable(false);
+                pd.setCanceledOnTouchOutside(false);
+                pd.setMessage("hold on!!!");
+                pd.show();
+
                 if (isValid()) {
                     username.setError("");
                     password.setError("");
@@ -71,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
                     String name = username.getEditText().getText().toString().trim();
                     String pass = password.getEditText().getText().toString().trim();
 
-                    auth.signInWithEmailAndPassword(name,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    auth.signInWithEmailAndPassword(name, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful())
-                            {
+                            if (task.isSuccessful()) {
+                                pd.dismiss();
                                 startActivity(new Intent(MainActivity.this, UserDashboard.class));
                                 finish();
                             }
@@ -83,11 +98,13 @@ public class MainActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(MainActivity.this, "network error", Toast.LENGTH_SHORT).show();
+                            pd.dismiss();
+                            Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
                         }
                     });
                     //Toast.makeText(MainActivity.this, "200", Toast.LENGTH_SHORT).show();
                 } else {
+                    pd.dismiss();
                     Toast.makeText(MainActivity.this, "credential required", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -18,16 +18,16 @@ public class UserDashboard extends AppCompatActivity implements BottomNavigation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_dashboard);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         BottomNavigationView navigationView = findViewById(R.id.user_bottom_navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new UserHomeFragment()).commit();
 
-        Bundle intent = getIntent().getExtras();
-        String uid = intent.getString("uid");
-        System.out.println("uid : "+uid);
+//        Bundle intent = getIntent().getExtras();
+//        String uid = intent.getString("uid");
+//        System.out.println("uid : "+uid);
     }
 
     @Override
