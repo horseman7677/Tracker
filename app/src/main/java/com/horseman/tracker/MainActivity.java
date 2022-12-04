@@ -23,7 +23,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.horseman.tracker.model.UserModel;
 import com.horseman.tracker.onBoarding.OnBoarding;
 import com.horseman.tracker.user.UserDashboard;
 
@@ -33,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     AppCompatButton signBtn;
     TextInputLayout username, password;
     FirebaseAuth auth;
-    DatabaseReference reference;
     ProgressDialog pd;
 
     @Override
@@ -47,11 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        if(auth.getCurrentUser()!=null)
-        {
-            Intent intent =new Intent(MainActivity.this,UserDashboard.class);
-            System.out.println("check ------------------------------------------------------: "+auth.getCurrentUser().getUid().trim());
-            intent.putExtra("uid",auth.getCurrentUser().getUid());
+        if (auth.getCurrentUser() != null) {
+            Intent intent = new Intent(MainActivity.this, UserDashboard.class);
+            System.out.println("check ------------------------------------------------------: " + auth.getCurrentUser().getUid().trim());
+            intent.putExtra("uid", auth.getCurrentUser().getUid());
             startActivity(intent);
             finish();
         }
@@ -109,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private boolean isValid() {
