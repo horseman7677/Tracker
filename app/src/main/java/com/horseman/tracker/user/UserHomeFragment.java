@@ -61,7 +61,12 @@ public class UserHomeFragment extends Fragment {
                 Bundle args = new Bundle();
                 args.putString("username",username);
                 //frag.setArguments(args);
-                getFragmentManager().setFragmentResult("data",args);
+                try{
+                    getFragmentManager().setFragmentResult("data",args);
+                }catch (Exception e)
+                {
+                    e.getStackTrace();
+                }
             }
 
             @Override
