@@ -99,8 +99,14 @@ public class UserProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAM_CODE) {
 //            imageView.setImageURI(data.getData());
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            openDiolog(image);
+            try{
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                openDiolog(image);
+            }catch(Exception e)
+            {
+                e.getStackTrace();
+            }
+
 
         }
     }
